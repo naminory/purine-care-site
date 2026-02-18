@@ -7,7 +7,9 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif; color: #333; background: #fafafa; line-height: 1.8; }
-        .header { background: linear-gradient(135deg, #4CAF50, #2E7D6F); color: white; padding: 60px 20px; text-align: center; }
+        .header { background: linear-gradient(135deg, #4CAF50, #2E7D6F); color: white; padding: 60px 20px; text-align: center; position: relative; }
+        .lang-switch { position: absolute; top: 16px; right: 20px; color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.9; }
+        .lang-switch:hover { opacity: 1; text-decoration: underline; }
         .header h1 { font-size: 2rem; margin-bottom: 8px; }
         .header p { font-size: 1rem; opacity: 0.9; }
         .container { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
@@ -23,6 +25,7 @@
 </head>
 <body>
     <div class="header">
+        <a href="en/index.html" class="lang-switch">English</a>
         <h1>プリンケア</h1>
         <p>プリン体摂取管理アプリ</p>
     </div>
