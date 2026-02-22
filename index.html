@@ -3,70 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>プリンケア - サポート</title>
+    <title>プリンケア - プリン体摂取管理アプリ</title>
+    <meta name="description" content="プリンケアは痛風・高尿酸血症が気になる方のためのプリン体摂取管理アプリです。400種以上の食品データベース、AI食事認識、週間統計グラフで毎日の管理をサポート。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #2E7D6F;
+            --primary-light: #4CAF50;
+            --primary-bg: #E8F5E9;
+            --text: #333;
+            --text-light: #666;
+            --bg: #fafafa;
+            --white: #fff;
+            --max-width: 1080px;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif; color: #333; background: #fafafa; line-height: 1.8; }
-        .header { background: linear-gradient(135deg, #4CAF50, #2E7D6F); color: white; padding: 60px 20px; text-align: center; position: relative; }
-        .lang-switch { position: absolute; top: 16px; right: 20px; color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.9; }
-        .lang-switch:hover { opacity: 1; text-decoration: underline; }
-        .header h1 { font-size: 2rem; margin-bottom: 8px; }
-        .header p { font-size: 1rem; opacity: 0.9; }
-        .container { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
-        h2 { font-size: 1.4rem; margin: 32px 0 16px; color: #2E7D6F; }
-        p, li { font-size: 1rem; margin-bottom: 12px; }
-        ul { padding-left: 24px; }
-        .card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
-        .links a { display: inline-block; padding: 12px 24px; background: #4CAF50; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
-        .links a.secondary { background: white; color: #4CAF50; border: 2px solid #4CAF50; }
-        .footer { text-align: center; padding: 40px 20px; color: #888; font-size: 0.85rem; }
+        body { font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Sans', sans-serif; color: var(--text); background: var(--bg); line-height: 1.8; }
+        img { max-width: 100%; height: auto; }
+
+        /* ===== Header ===== */
+        .header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            padding: 12px 24px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .header-logo { font-size: 1.3rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .header-nav { display: flex; align-items: center; gap: 16px; }
+        .header-nav a { color: var(--text-light); text-decoration: none; font-size: 0.9rem; }
+        .header-nav a:hover { color: var(--primary); }
+
+        /* ===== Hero ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            padding: 120px 24px 60px;
+            color: var(--white);
+            text-align: center;
+            overflow: hidden;
+        }
+        .hero-inner {
+            max-width: var(--max-width); margin: 0 auto;
+        }
+        .hero h1 { font-size: 2.4rem; font-weight: 700; line-height: 1.4; margin-bottom: 16px; }
+        .hero p { font-size: 1.1rem; opacity: 0.9; margin-bottom: 32px; line-height: 1.8; }
+        .store-badge { display: inline-block; }
+        .store-badge img { height: 48px; width: auto; }
+
+        /* ===== Screenshots Showcase ===== */
+        .screenshots {
+            padding: 60px 24px 80px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--bg) 40%);
+            overflow: hidden;
+        }
+        .screenshots-inner {
+            max-width: var(--max-width); margin: 0 auto;
+            display: flex; justify-content: center; align-items: flex-start; gap: 20px;
+        }
+        .screenshot-item {
+            flex: 0 1 220px; text-align: center;
+        }
+        .screenshot-item img {
+            width: 100%; border-radius: 24px;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.18);
+            transition: transform 0.3s ease;
+        }
+        .screenshot-item img:hover {
+            transform: translateY(-8px);
+        }
+        .screenshot-caption {
+            margin-top: 16px; font-size: 0.85rem; font-weight: 500;
+            color: var(--text-light);
+        }
+
+        /* ===== Features Grid ===== */
+        .features { padding: 80px 24px; }
+        .features-inner { max-width: var(--max-width); margin: 0 auto; }
+        .section-title { text-align: center; font-size: 1.8rem; font-weight: 700; margin-bottom: 12px; }
+        .section-subtitle { text-align: center; font-size: 1rem; color: var(--text-light); margin-bottom: 48px; }
+        .features-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+        }
+        .feature-card {
+            background: var(--white); border-radius: 16px; padding: 32px 24px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            transition: box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .feature-icon {
+            width: 48px; height: 48px; border-radius: 12px;
+            background: var(--primary-bg); display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; margin-bottom: 16px;
+        }
+        .feature-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; color: var(--text); }
+        .feature-card p { font-size: 0.9rem; color: var(--text-light); line-height: 1.7; }
+
+        /* ===== Pricing ===== */
+        .pricing { padding: 80px 24px; background: var(--white); }
+        .pricing-inner { max-width: 800px; margin: 0 auto; }
+        .pricing-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .pricing-card {
+            border: 2px solid #e0e0e0; border-radius: 16px; padding: 32px 24px;
+            text-align: center; position: relative;
+        }
+        .pricing-card.premium {
+            border-color: var(--primary); box-shadow: 0 8px 30px rgba(46,125,111,0.15);
+        }
+        .pricing-badge {
+            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: var(--primary); color: var(--white);
+            padding: 4px 16px; border-radius: 12px; font-size: 0.75rem; font-weight: 700;
+            white-space: nowrap;
+        }
+        .pricing-card h3 { font-size: 1.2rem; margin-bottom: 8px; }
+        .pricing-price { font-size: 2rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+        .pricing-price span { font-size: 0.9rem; font-weight: 400; color: var(--text-light); }
+        .pricing-features { list-style: none; padding: 0; margin-top: 24px; text-align: left; }
+        .pricing-features li {
+            padding: 8px 0; font-size: 0.9rem; color: var(--text-light);
+            border-bottom: 1px solid #f0f0f0;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .pricing-features li:last-child { border-bottom: none; }
+        .check { color: var(--primary); font-weight: 700; }
+        .highlight { color: var(--primary); font-weight: 700; }
+
+        /* ===== CTA ===== */
+        .cta {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            padding: 80px 24px; text-align: center; color: var(--white);
+        }
+        .cta h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 12px; }
+        .cta p { font-size: 1rem; opacity: 0.9; margin-bottom: 32px; }
+
+        /* ===== Contact ===== */
+        .contact { padding: 60px 24px; text-align: center; }
+        .contact h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; color: var(--text); }
+        .contact p { font-size: 0.95rem; color: var(--text-light); margin-bottom: 8px; }
+        .contact a { color: var(--primary); }
+
+        /* ===== Footer ===== */
+        .footer {
+            background: #333; color: rgba(255,255,255,0.7); padding: 40px 24px; text-align: center;
+        }
+        .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+        .footer-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.85rem; }
+        .footer-links a:hover { color: var(--white); }
+        .footer-copy { font-size: 0.8rem; opacity: 0.6; }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .hero { padding: 100px 20px 40px; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 1rem; }
+
+            .screenshots { padding: 40px 16px 60px; }
+            .screenshots-inner { gap: 10px; }
+            .screenshot-item { flex: 0 1 160px; }
+            .screenshot-item img { border-radius: 16px; }
+            .screenshot-caption { font-size: 0.75rem; margin-top: 10px; }
+
+            .features { padding: 48px 20px; }
+            .features-grid { grid-template-columns: 1fr; gap: 20px; }
+
+            .pricing { padding: 48px 20px; }
+            .pricing-cards { grid-template-columns: 1fr; }
+            .section-title { font-size: 1.4rem; }
+
+            .cta { padding: 48px 20px; }
+            .cta h2 { font-size: 1.4rem; }
+        }
+
+        @media (max-width: 480px) {
+            .screenshots-inner { gap: 6px; }
+            .screenshot-item { flex: 0 1 calc(25% - 6px); }
+            .screenshot-item img { border-radius: 12px; }
+            .screenshot-caption { display: none; }
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <a href="en/index.html" class="lang-switch">English</a>
-        <h1>プリンケア</h1>
-        <p>プリン体摂取管理アプリ</p>
+
+<!-- Header -->
+<header class="header">
+    <a href="#" class="header-logo">プリンケア</a>
+    <nav class="header-nav">
+        <a href="en/index.html">English</a>
+    </nav>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-inner">
+        <h1>プリン体を<br>毎日かんたん管理</h1>
+        <p>痛風・高尿酸血症が気になる方のための<br>プリン体摂取管理アプリ。AIが食事を自動認識、毎日の記録をサポートします。</p>
+        <a href="https://apps.apple.com/app/id6758914341" class="store-badge" target="_blank" rel="noopener">
+            <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/ja-jp?size=250x83" alt="App Storeからダウンロード">
+        </a>
     </div>
+</section>
 
-    <div class="container">
-        <div class="card">
-            <h2>アプリについて</h2>
-            <p>プリンケアは、痛風や高尿酸血症が気になる方のためのプリン体摂取管理アプリです。</p>
-            <ul>
-                <li>400種以上の食品データベースから簡単にプリン体・カロリーを記録</li>
-                <li>AIが食事写真から食品を自動認識</li>
-                <li>日々の食事データに基づくAIアドバイス</li>
-                <li>水分摂取の記録・管理</li>
-                <li>週間統計グラフで摂取傾向を把握</li>
-                <li>Apple ヘルスケアとの連携</li>
-            </ul>
+<!-- Screenshots -->
+<section class="screenshots">
+    <div class="screenshots-inner">
+        <div class="screenshot-item">
+            <img src="images/ja/screenshot-1.png" alt="ホーム画面" loading="eager">
+            <p class="screenshot-caption">AIアドバイス &amp; ホーム</p>
         </div>
-
-        <div class="card">
-            <h2>お問い合わせ</h2>
-            <p>アプリに関するご質問、不具合の報告、ご要望などがございましたら、以下の方法でお問い合わせください。</p>
-            <ul>
-                <li>App Storeのアプリページからレビューまたは「問題を報告」をご利用ください</li>
-                <li>メール: <a id="mail-link" href="mailto:naminorya@gmail.com">naminorya@gmail.com</a></li>
-            </ul>
+        <div class="screenshot-item">
+            <img src="images/ja/screenshot-2.png" alt="食事追加画面" loading="eager">
+            <p class="screenshot-caption">かんたん食事記録</p>
         </div>
-
-        <div class="links">
-            <a href="privacy-policy.html">プライバシーポリシー</a>
-            <a href="terms-of-service.html" class="secondary">利用規約</a>
+        <div class="screenshot-item">
+            <img src="images/ja/screenshot-3.png" alt="AI食事認識画面" loading="eager">
+            <p class="screenshot-caption">AI写真認識</p>
+        </div>
+        <div class="screenshot-item">
+            <img src="images/ja/screenshot-4.png" alt="週間統計画面" loading="eager">
+            <p class="screenshot-caption">週間統計グラフ</p>
         </div>
     </div>
+</section>
 
-    <div class="footer">
-        <p>&copy; 2025 プリンケア. All rights reserved.</p>
+<!-- Features -->
+<section class="features">
+    <div class="features-inner">
+        <h2 class="section-title">主な機能</h2>
+        <p class="section-subtitle">プリン体管理に必要なすべてが揃っています。</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h3>400種以上の食品データベース</h3>
+                <p>肉類・魚介類・野菜類など8カテゴリの豊富なデータベースから素早く検索。プリン体・カロリー・PFCを自動計算します。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📸</div>
+                <h3>AI食事認識</h3>
+                <p>食事の写真を撮るだけでAIが食品名・グラム数・プリン体量を自動認識。複数の食品を一度に判別できます。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💡</div>
+                <h3>AIアドバイス</h3>
+                <p>毎日の食事データに基づいて、AIがあなたに合った食事アドバイスを提供。プリン体管理をサポートします。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>週間統計グラフ</h3>
+                <p>1週間のプリン体摂取量をグラフで可視化。上限ラインとの比較で摂取傾向がひと目でわかります。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💧</div>
+                <h3>水分摂取記録</h3>
+                <p>尿酸値の管理に大切な水分摂取量を記録・管理。毎日の目標達成をサポートします。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">❤️</div>
+                <h3>Apple ヘルスケア連携</h3>
+                <p>Apple ヘルスケアとデータを連携。体重や歩数など、健康データを一元管理できます。</p>
+            </div>
+        </div>
     </div>
-    <script>
-        document.getElementById('mail-link').addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = 'mailto:naminorya@gmail.com?subject=' + encodeURIComponent('【プリンケア】お問い合わせ');
-        });
-    </script>
+</section>
+
+<!-- Pricing -->
+<section class="pricing">
+    <div class="pricing-inner">
+        <h2 class="section-title">料金プラン</h2>
+        <p class="section-subtitle">基本機能はすべて無料。AI機能をもっと使いたい方にはプレミアムプラン。</p>
+        <div class="pricing-cards">
+            <div class="pricing-card">
+                <h3>無料プラン</h3>
+                <div class="pricing-price">¥0</div>
+                <ul class="pricing-features">
+                    <li><span class="check">✓</span> 400種以上の食品データベース</li>
+                    <li><span class="check">✓</span> 食事記録・管理</li>
+                    <li><span class="check">✓</span> 週間統計グラフ</li>
+                    <li><span class="check">✓</span> 水分摂取記録</li>
+                    <li><span class="check">✓</span> Apple ヘルスケア連携</li>
+                    <li>AI食事認識 <span class="highlight">1日3回</span></li>
+                    <li>AIアドバイス <span class="highlight">1日1回</span></li>
+                </ul>
+            </div>
+            <div class="pricing-card premium">
+                <span class="pricing-badge">おすすめ</span>
+                <h3>プレミアム</h3>
+                <div class="pricing-price">¥100<span> / 月</span></div>
+                <ul class="pricing-features">
+                    <li><span class="check">✓</span> 無料プランの全機能</li>
+                    <li><span class="check">✓</span> AI食事認識 <span class="highlight">無制限</span></li>
+                    <li><span class="check">✓</span> AIアドバイス <span class="highlight">無制限</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <h2>今すぐプリン体管理を始めよう</h2>
+    <p>ダウンロード無料。まずは気軽にお試しください。</p>
+    <a href="https://apps.apple.com/app/id6758914341" class="store-badge" target="_blank" rel="noopener">
+        <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/white/ja-jp?size=250x83" alt="App Storeからダウンロード">
+    </a>
+</section>
+
+<!-- Contact -->
+<section class="contact">
+    <h2>お問い合わせ</h2>
+    <p>アプリに関するご質問・不具合の報告・ご要望はこちら</p>
+    <p><a id="mail-link" href="mailto:naminorya@gmail.com">naminorya@gmail.com</a></p>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-links">
+        <a href="privacy-policy.html">プライバシーポリシー</a>
+        <a href="terms-of-service.html">利用規約</a>
+        <a href="en/index.html">English</a>
+    </div>
+    <p class="footer-copy">&copy; 2025 プリンケア. All rights reserved.</p>
+</footer>
+
+<script>
+    document.getElementById('mail-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = 'mailto:naminorya@gmail.com?subject=' + encodeURIComponent('【プリンケア】お問い合わせ');
+    });
+</script>
 </body>
 </html>
